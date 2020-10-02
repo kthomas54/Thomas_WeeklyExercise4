@@ -113,7 +113,7 @@ ggmap(world) +
   theme_map() +
   theme(legend.background = element_blank())
 ```
-  Observation: The Starbuck franchise has locations around the world, but mostly in the United States and Eastern Europe. The majority of the companies appear to be company owned as there are a
+  Observation: The Starbucks franchise has locations around the world, but mostly in the United States and Eastern Europe. The majority of the companies appear to be company owned as there are only one type of color that is visible on the map.
 
   2. Construct a new map of Starbucks locations in the Twin Cities metro area (approximately the 5 county metro area).  
 
