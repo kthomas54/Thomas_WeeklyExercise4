@@ -1,0 +1,41 @@
+---
+title: 'Tidy Tuesday #4'
+author: "Kalvin Thomas"
+output: 
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(tidyverse)     
+library(lubridate)     
+library(ggthemes)      
+theme_set(theme_minimal()) 
+```
+
+```{r cars}
+beyonce_lyrics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/beyonce_lyrics.csv')
+taylor_swift_lyrics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/taylor_swift_lyrics.csv')
+sales <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/sales.csv')
+charts <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/charts.csv')
+```
+## Which Artist Had More Sales in Each Country and in the World Overall?
+
+```{r}
+sales %>% 
+  filter(!is.na(country)) %>% 
+  ggplot(aes(x = country,
+             y = sales,
+             fill = artist)) +
+  labs(x = "Country",
+       y = "Sales",
+       title = "Sales in Each Country and Worldwide Totals for Each Artist") +
+  geom_col(position = "dodge") 
+
+```
