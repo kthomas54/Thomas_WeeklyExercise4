@@ -190,8 +190,35 @@ starbucks_with_2018_pop_est <-
 ```
 
   6. **`dplyr` review**: Look through the code above and describe what each line of code does.
-
+    
+    - 180: gives a name to the data read in
+    - 181: removes the dot from the states
+    - 182: removes the dot column
+    - 183: adds a new variable with the states lowercased to match the region format
+    - 185: creating new dataset
+    - 186: naming the dataset to the left
+    - 187: preparing to joing the data on the right into the dataset on the left
+    - 188: defines the conditions of which data to join
+    - 189: adding a new variable; number of starbucks per 10,000 people
+    
   7. Create a choropleth map that shows the number of Starbucks per 10,000 people on a map of the US. Use a new fill color, add points for all Starbucks in the US (except Hawaii and Alaska), add an informative title for the plot, and include a caption that says who created the plot (you!). Make a conclusion about what you observe.
+  
+```{r}
+states_map <- map_data("state")
+
+starbucks_with_2018_pop_est %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state_name,
+               fill = starbucks_per_10000)) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  labs(title = "Starbucks in the United States per 10000",
+       caption = "Created by Kalvin Thomas",
+       fill = "") +
+  theme_map() +
+  theme(legend.background = element_blank())
+```
+
 
 ### A few of your favorite things (`leaflet`)
 
