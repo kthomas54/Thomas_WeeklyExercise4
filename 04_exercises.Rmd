@@ -219,12 +219,32 @@ starbucks_with_2018_pop_est %>%
   theme(legend.background = element_blank())
 ```
 
-
+  - Conclusion: It seems as though the west coast is the region that has the most Starbucks per 10,000 people overall, but Colorado is the single state with most Starbucks per 10,000 people.
+  
 ### A few of your favorite things (`leaflet`)
 
   8. In this exercise, you are going to create a single map of some of your favorite places! The end result will be one map that satisfies the criteria below. 
-
+  
   * Create a data set using the `tibble()` function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use `tibble()`, look at the `favorite_stp_by_lisa` I created in the data R code chunk at the beginning.  
+```{r}
+Kal_Places <- tribble(
+  ~Location, ~lon,  ~lat, ~Top3,
+  "Macalester College", 44.93818,  -93.17073, FALSE,
+  "Snap Fitness", 44.94397,  -93.16755, FALSE,
+  "Home (MN)", 44.93102, -93.17147, TRUE,
+  "Home (MA)", 42.37047, -72.10636, FALSE,
+  "Princeton", 33.1856, -96.5061, FALSE,
+  "Boston", 42.3773, -71.0903, FALSE,
+  "White Mountains", 44.16128, -71.64579, FALSE,
+  "Acadia National Park", 44.4147, -68.4270, TRUE,
+  "Plums", 44.92784, -93.16834, FALSE,
+  "Grandparent's House", 44.5454, -67.8753, TRUE)
+
+Kal_Places
+
+
+
+```
 
   * Create a `leaflet` map that uses circles to indicate your favorite places. Label them with the name of the place. Choose the base map you like best. Color your 3 favorite places differently than the ones that are not in your top 3 (HINT: `colorFactor()`). Add a legend that explains what the colors mean.  
   
