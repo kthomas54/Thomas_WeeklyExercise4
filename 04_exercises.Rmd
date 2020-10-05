@@ -12,7 +12,7 @@ output:
 
 
 ```{r setup, include=FALSE}
-#knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
 ```
 
 ```{r libraries}
@@ -110,6 +110,7 @@ ggmap(world) +
              alpha = .3,
              size = .1, 
              ) +
+  ggtitle(label = "Worldwide Starbucks Locations") +
   theme_map() +
   theme(legend.background = element_blank())
 ```
@@ -130,6 +131,7 @@ ggmap(TCities) +
              alpha = 1,
              size = 1, 
              ) +
+  ggtitle(label = "Twin Cities Starbucks Locations") +
   theme_map()
 ```
 
@@ -151,6 +153,7 @@ ggmap(TCities) +
              alpha = 1,
              size = 1, 
              ) +
+  ggtitle(label = "Twin Cities Starbucks Locations") +
   theme_map()
 ```
 
@@ -169,6 +172,7 @@ ggmap(TCities) +
              size = 1, 
              ) +
   annotate(geom = "text", x = -93, y = 44.9, label = "Macalester College", color = "blue") +
+  ggtitle(label = "Twin Cities Starbucks Locations") +
   theme_map()
 ```
 
@@ -217,7 +221,7 @@ starbucks_with_2018_pop_est %>%
              size = .1,
              color = "yellow") +
   expand_limits(x = states_map$long, y = states_map$lat) + 
-  labs(title = "Starbucks in the United States per 10000",
+  labs(title = "Starbucks in the United States per 10000 People",
        caption = "Created by Kalvin Thomas") +
   theme_map() +
   theme(legend.background = element_blank())
@@ -258,11 +262,12 @@ pal1 <- colorFactor("viridis",
 
 leaflet(Kal_Places) %>% 
   addTiles() %>% 
- addCircles(lng = ~lon,
+  addCircles(lng = ~lon,
             lat = ~lat,
             label = ~Location,
             color = ~pal1(Top3),
-            opacity = 1)
+            opacity = 1) 
+
 
 ```
 
@@ -335,8 +340,26 @@ leaflet(Trips) %>%
   10. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? Also plot this on top of a map. I think it will be more clear what the patterns are.
   
 ```{r}
+newStations<- Stations %>% 
+  mutate(cas_dept = nbBikes*0.144)
 
+pal <- colorFactor("magma",
+                   newStations$cas_dept)
+
+leaflet(Trips) %>% 
+  addTiles() %>% 
+  addCircles(data = newStations,
+             lng = ~long,
+             lat = ~lat,
+             color = ~pal(cas_dept)) %>% 
+  addLegend(data = newStations,
+            pal = pal,
+            values = ~cas_dept,
+            title = NULL,
+            position = "bottomright")
 ```
+  
+  - Observation: There is a higher amount of casual users the deeper into the city you look. This makes sense because casual bikers are more likely to only bike short distances such as a brief commute to work in the city.
   
 ### COVID-19 data
 
