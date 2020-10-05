@@ -253,7 +253,7 @@ Kal_Places
   * Create a `leaflet` map that uses circles to indicate your favorite places. Label them with the name of the place. Choose the base map you like best. Color your 3 favorite places differently than the ones that are not in your top 3 (HINT: `colorFactor()`). Add a legend that explains what the colors mean.  
 
 ```{r}
-pal <- colorFactor("viridis", 
+pal1 <- colorFactor("viridis", 
                      domain = Kal_Places$Top3)
 
 leaflet(Kal_Places) %>% 
@@ -261,7 +261,7 @@ leaflet(Kal_Places) %>%
  addCircles(lng = ~lon,
             lat = ~lat,
             label = ~Location,
-            color = ~pal(Top3),
+            color = ~pal1(Top3),
             opacity = 1)
 
 ```
@@ -270,7 +270,7 @@ leaflet(Kal_Places) %>%
 
 ```{r}
 
-pal <- colorFactor("magma", 
+pal1 <- colorFactor("magma", 
                      domain = Kal_Places$Top3)
 
 leaflet(Kal_Places) %>% 
@@ -278,7 +278,7 @@ leaflet(Kal_Places) %>%
   addCircles(lng = ~lon,
             lat = ~lat,
             label = ~Location,
-            color = ~pal(Top3),
+            color = ~pal1(Top3),
             opacity = 1) %>% 
   addPolylines(lng = ~lon, 
                lat = ~lat, 
@@ -314,7 +314,7 @@ Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv
   9. Use the latitude and longitude variables in `Stations` to make a visualization of the total number of departures from each station in the `Trips` data. Use either color or size to show the variation in number of departures. This time, plot the points on top of a map. Use any of the mapping tools you'd like.
   
 ```{r}
-pal <- colorFactor("magma",
+pal2 <- colorFactor("magma",
                    Stations$nbBikes)
 
 leaflet(Trips) %>% 
@@ -322,9 +322,9 @@ leaflet(Trips) %>%
   addCircles(data = Stations,
              lng = ~long,
              lat = ~lat,
-             color = ~pal(nbBikes)) %>% 
+             color = ~pal2(nbBikes)) %>% 
   addLegend(data = Stations,
-            pal = pal,
+            pal = pal2,
             values = ~nbBikes,
             title = NULL,
             position = "bottomright")
@@ -443,20 +443,84 @@ mpls_suspicious
   15. Use a `leaflet` map and the `MplsStops` dataset to display each of the stops on a map as a small point. Color the points differently depending on whether they were for suspicious vehicle/person or a traffic stop (the `problem` variable). HINTS: use `addCircleMarkers`, set `stroke = FAlSE`, use `colorFactor()` to create a palette.  
   
 ```{r}
+pal3 <- colorFactor("viridis",
+                   MplsStops$problem)
 
+leaflet(MplsStops) %>% 
+  addTiles() %>% 
+  addCircleMarkers(lng = ~long,
+                   lat = ~lat,
+                   color = ~pal3(problem),
+                   radius = 1.5,
+                   stroke = FALSE) %>% 
+  addLegend(pal = pal3,
+            values = ~problem,
+            title = NULL,
+            position = "bottomright")
 
 ```
   
   16. Save the folder from moodle called Minneapolis_Neighborhoods into your project/repository folder for this assignment. Make sure the folder is called Minneapolis_Neighborhoods. Use the code below to read in the data and make sure to **delete the `eval=FALSE`**. Although it looks like it only links to the .sph file, you need the entire folder of files to create the `mpls_nbhd` data set. These data contain information about the geometries of the Minneapolis neighborhoods. Using the `mpls_nbhd` dataset as the base file, join the `mpls_suspicious` and `MplsDemo` datasets to it by neighborhood (careful, they are named different things in the different files). Call this new dataset `mpls_all`.
 
-```{r, eval=FALSE}
+```{r}
 mpls_nbhd <- st_read("Minneapolis_Neighborhoods/Minneapolis_Neighborhoods.shp", quiet = TRUE)
+
+mpls_int <- mpls_nbhd %>% 
+  left_join(mpls_suspicious,
+            by = c("BDNAME" = "neighborhood"))
+
+mpls_all <- mpls_int %>% 
+  left_join(MplsDemo,
+            by = c("BDNAME" = "neighborhood"))
 ```
 
   17. Use `leaflet` to create a map from the `mpls_all` data  that colors the neighborhoods by `prop_suspicious`. Display the neighborhood name as you scroll over it. Describe what you observe in the map.
   
+```{r}
+pal4 <- colorFactor("magma",
+                   mpls_all$prop_sus)
+
+leaflet(mpls_all) %>% 
+  addTiles() %>% 
+  addPolygons(stroke = FALSE,
+              fillColor = ~pal4(prop_sus),
+              fillOpacity = .8,
+              label = ~paste(BDNAME,
+                             ":",
+                             round(prop_sus,4))) %>% 
+  addLegend(position = "topright",
+            pal = pal4,
+            values = ~prop_sus,
+            bins = 2, #Tried to limit the scale of the legend but nothing would change this
+            title = "Proportion of Suspicious Stops to Total Stops")
+
+
+```
+  
   18. Use `leaflet` to create a map of your own choosing. Come up with a question you want to try to answer and use the map to help answer that question. Describe what your map shows. 
   
+```{r}
+pal5 <- colorFactor("viridis",
+                    mpls_all$poverty)
+
+leaflet(mpls_all) %>%
+  addTiles() %>% 
+  addPolygons(stroke = FALSE,
+              fillColor = ~pal5(poverty),
+              fillOpacity = .8,
+              label = ~paste(BDNAME,
+                             ":",
+                             black),
+              highlight = highlightOptions(weight = 5, 
+                                 color = "black",
+                                 fillOpacity = 0.9,
+                                 bringToFront = FALSE)) %>% 
+  addLegend(position = "topleft",
+            pal = pal5,
+            values= ~poverty,
+            title = "Poverty Rate")
+
+```
   
 ## GitHub link
 
