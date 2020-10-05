@@ -551,7 +551,7 @@ leaflet(mpls_all) %>%
   
 ## GitHub link
 
-  19. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 04_exercises.Rmd, provide a link to the 04_exercises.md file, which is the one that will be most readable on GitHub.
+  19. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 04_exercises.Rmd, provide a link to the 04_exercises.md file, which is the one that will be most readable on GitHub.  
 
 
 - Github link [here](https://github.com/kthomas54/Thomas_WeeklyExercise4/blob/master/04_exercises.md)
