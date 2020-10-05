@@ -544,12 +544,16 @@ leaflet(mpls_all) %>%
             title = "Poverty Rate")
 
 ```
+
+##Question: How does the poverty of neighborhoods in Minneapolis correlate to the black population density?
+
+  - Observation: Generally, the lighter colored zones, and thus the more impoverished neighborhoods, have a higher black population density. Conversely, the darker colored zones, which are the less impoverished neighborhoods, do not have as high of a black population density. This is not the case for every neighborhood, but it is the general consensus of this graphic. It would be interesting to compare this map to a map of previously red-lined districts in Minneapolis and compare the similarities between the two.
   
 ## GitHub link
 
   19. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 04_exercises.Rmd, provide a link to the 04_exercises.md file, which is the one that will be most readable on GitHub.
 
 
-- Github link [here]()
+- Github link [here](https://github.com/kthomas54/Thomas_WeeklyExercise4/blob/master/04_exercises.md)
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**
