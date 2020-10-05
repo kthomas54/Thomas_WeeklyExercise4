@@ -229,16 +229,16 @@ starbucks_with_2018_pop_est %>%
 ```{r}
 Kal_Places <- tribble(
   ~Location, ~lon,  ~lat, ~Top3,
-  "Macalester College", 44.93818,  -93.17073, FALSE,
-  "Snap Fitness", 44.94397,  -93.16755, FALSE,
-  "Home (MN)", 44.93102, -93.17147, TRUE,
-  "Home (MA)", 42.37047, -72.10636, FALSE,
-  "Princeton", 33.1856, -96.5061, FALSE,
-  "Boston", 42.3773, -71.0903, FALSE,
-  "White Mountains", 44.16128, -71.64579, FALSE,
-  "Acadia National Park", 44.4147, -68.4270, TRUE,
-  "Plums", 44.92784, -93.16834, FALSE,
-  "Grandparent's House", 44.5454, -67.8753, TRUE)
+  "Macalester College", -93.17073, 44.93818, FALSE,
+  "Snap Fitness", -93.16755, 44.94397, FALSE,
+  "Home (MN)", -93.17147, 44.93102, TRUE,
+  "Home (MA)", -72.10636, 42.37047, FALSE,
+  "Princeton", -96.5061, 33.1856, FALSE,
+  "Boston", -71.0903, 42.3773, FALSE,
+  "White Mountains", -71.64579, 44.16128, FALSE,
+  "Acadia National Park", -68.4270, 44.4147, TRUE,
+  "Plums", -93.16834, 44.92784, FALSE,
+  "Grandparent's House", -67.8753, 44.5454, TRUE)
 
 Kal_Places
 
@@ -247,7 +247,21 @@ Kal_Places
 ```
 
   * Create a `leaflet` map that uses circles to indicate your favorite places. Label them with the name of the place. Choose the base map you like best. Color your 3 favorite places differently than the ones that are not in your top 3 (HINT: `colorFactor()`). Add a legend that explains what the colors mean.  
-  
+
+```{r}
+pal <- colorFactor("viridis", 
+                     domain = Kal_Places$Top3)
+
+leaflet(Kal_Places) %>% 
+  addTiles() %>% 
+ addCircles(lng = ~lon,
+            lat = ~lat,
+            label = ~Location,
+            color = ~pal(Top3),
+            opacity = 1)
+
+```
+
   * Connect all your locations together with a line in a meaningful way (you may need to order them differently in the original data).  
   
   * If there are other variables you want to add that could enhance your plot, do that now.  
